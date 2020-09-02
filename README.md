@@ -1,4 +1,4 @@
-# Deep Learning for Computer Vision - Compact Course
+# Training Deep Learning Models for Vision - Compact Course
 
 A compact course on using deep learning methods for computer vision.
 Based on material from the [EMBL deep learning course](https://github.com/kreshuklab/teaching-dl-course-2019).
