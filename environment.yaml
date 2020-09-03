@@ -1,0 +1,13 @@
+channels:
+    - pytorch
+    - conda-forge
+name:
+    adl-course
+dependencies:
+    - cpuonly
+    - imageio
+    - jupyter
+    - nb_conda
+    - pytorch
+    - scikit-image
+    - torchvision
