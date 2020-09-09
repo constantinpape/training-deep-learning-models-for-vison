@@ -2,7 +2,6 @@ import os
 import numpy as np
 
 import torch
-import torch.nn as nn
 from torch.utils.data import Dataset
 
 from imageio import imread
@@ -69,16 +68,13 @@ def to_channel_first(image, target):
     return image, target
 
 
-# TODO channelwise normalization
-# TODO consider 0-1 normalization, it makes live much easier
-def normalize(image, target, mean=None, std=None):
+def normalize(image, target, channel_wise=True):
     eps = 1.e-6
     image = image.astype('float32')
-    if mean is None:
-        mean = image.mean()
-    if std is None:
-        std = image.std()
-    image = (image - mean) / (std + eps)
+    chan_min = image.min(axis=(1, 2), keepdims=True)
+    image -= chan_min
+    chan_max = image.max(axis=(1, 2), keepdims=True)
+    image /= (chan_max + eps)
     return image, target
 
 
@@ -165,25 +161,3 @@ def train(model, loader,
             print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
                   epoch, batch_id * len(x), n_batches * len(x),
                   100. * batch_id / n_batches, loss_value.item()))
-
-
-
-
-
-
-# define logistic regression model
-class LogisticRegressor(nn.Module):
-    def __init__(self, n_pixels, n_classes):
-        super().__init__()
-        self.n_pixels = n_pixels
-        self.n_classes = n_classes
-        self.log_reg = nn.Sequential(nn.Linear(self.n_pixels,
-                                               self.n_classes),
-                                     nn.LogSoftmax(dim=1))
-
-    def forward(self, x):
-        # reshape the input to be 1d instead of 2d,
-        # which is required for fully connected layers
-        x = x.view(-1, self.n_pixels)
-        x = self.log_reg(x)
-        return x
