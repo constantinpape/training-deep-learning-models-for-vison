@@ -1,8 +1,12 @@
 import os
-import numpy as np
+import matplotlib.pyplot as plt
+from functools import partial
+from itertools import product
 
+import numpy as np
 import torch
 from torch.utils.data import Dataset
+import sklearn.metrics as metrics
 
 from imageio import imread
 from tqdm import tqdm
@@ -115,12 +119,33 @@ class DatasetWithTransform(Dataset):
         return self.data.shape[0]
 
 
-def make_cifar_datasets(images, labels, transform=None, validation_fraction=0.15):
+def get_default_cifar_transform():
+    trafos = [to_channel_first, normalize, to_tensor]
+    trafos = partial(compose, transforms=trafos)
+    return trafos
+
+
+def make_cifar_datasets(cifar_dir, transform=None, validation_fraction=0.15):
+    images, labels = load_cifar(os.path.join(cifar_dir, 'train'))
     (train_images, train_labels,
      val_images, val_labels) = make_cifar_train_val_split(images, labels, validation_fraction)
+
+    if transform is None:
+        transform = get_default_cifar_transform()
+
     train_dataset = DatasetWithTransform(train_images, train_labels, transform=transform)
     val_dataset = DatasetWithTransform(val_images, val_labels, transform=transform)
     return train_dataset, val_dataset
+
+
+def make_cifar_test_dataset(cifar_dir, transform=None):
+    images, labels = load_cifar(os.path.join(cifar_dir, 'test'))
+
+    if transform is None:
+        transform = get_default_cifar_transform()
+
+    dataset = DatasetWithTransform(images, labels, transform=transform)
+    return dataset
 
 
 #
@@ -129,8 +154,21 @@ def make_cifar_datasets(images, labels, transform=None, validation_fraction=0.15
 
 def train(model, loader,
           loss_function, optimizer,
-          epoch, log_frequency=10):
+          device, epoch,
+          tb_logger, log_image_interval=100):
     """ Train model for one epoch.
+
+    Parameters:
+    model - the model we are training
+    loader - the data loader that provides the training data
+        (= pairs of images and labels)
+    loss_function - the loss function that will be optimized
+    optimizer - the optimizer that is used to update the network parameters
+        by backpropagation of the loss
+    device - the device used for training. this can either be the cpu or gpu
+    epoch - which trainin eppch are we in? we keep track of this for logging
+    tb_logger - the tensorboard logger, it is used to communicate with tensorboard
+    log_image_interval - how often do we send images to tensborboard?
     """
 
     # set model to train mode
@@ -138,26 +176,134 @@ def train(model, loader,
 
     # iterate over the training batches provided by the loader
     n_batches = len(loader)
-    log_frequency_ = n_batches // log_frequency
     for batch_id, (x, y) in enumerate(loader):
+
+        # send data and target tensors to the active device
+        x = x.to(device)
+        y = y.to(device)
 
         # set the gradients to zero, to start with "clean" gradients
         # in this training iteration
         optimizer.zero_grad()
 
-        # apply the model and get our prediction
+        # apply the model to get the prediction
         prediction = model(x)
 
         # calculate the loss (negative log likelihood loss)
-        loss_value = loss_function(prediction, y)
+        # the target tensor is returned with a singleton axis, i.e.
+        # they have the shape (n_batches, 1). However, the loss function
+        # expects them to come in shape (n_batches,). That's why we need
+        # to index with [:, 0] here.
+        loss_value = loss_function(prediction, y[:, 0])
 
         # calculate the gradients (`loss.backward()`)
-        # and apply them to the model weights (`optimizer.ste()`)
+        # and apply them to the model parameters according
+        # to our optimizer (`optimizer.step()`)
         loss_value.backward()
         optimizer.step()
 
-        # report the training progress
-        if batch_id % log_frequency_ == 0:
-            print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
-                  epoch, batch_id * len(x), n_batches * len(x),
-                  100. * batch_id / n_batches, loss_value.item()))
+        # log the loss value to tensorboard
+        step = epoch * n_batches + batch_id
+        tb_logger.add_scalar(tag='train-loss',
+                             scalar_value=loss_value.item(),
+                             global_step=step)
+
+        # check if we log images, and if we do then send the
+        # current image to tensorboard
+        if log_image_interval is not None and step % log_image_interval == 0:
+            # TODO make logging more pretty, see
+            # https://www.tensorflow.org/tensorboard/image_summaries
+            tb_logger.add_images(tag='input',
+                                 img_tensor=x.to('cpu'),
+                                 global_step=step)
+
+
+def validate(model, loader, loss_function,
+             device, step, tb_logger=None):
+    """
+    Validate the model predictions.
+
+    Parameters:
+    model - the model to be evaluated
+    loader - the loader providing images and labels
+    loss_function - the loss function
+    device - the device used for prediction (cpu or gpu)
+    step - the current training step. we need to know this for logging
+    tb_logger - the tensorboard logger. if 'None', logging is disabled
+    """
+    # set the model to eval mode
+    model.eval()
+    n_batches = len(loader)
+
+    # we record the loss and the predictions / labels for all samples
+    mean_loss = 0
+    predictions = []
+    labels = []
+
+    # the model parameters are not updated during validation,
+    # hence we can disable gradients in order to save memory
+    with torch.no_grad():
+        for x, y in loader:
+            x = x.to(device)
+            y = y.to(device)
+            prediction = model(x)
+
+            # update the loss
+            mean_loss += loss_function(prediction, y[:, 0]).item()
+
+            # compute the most likely class predictions
+            # note that 'max' returns a tuple with the
+            # index of the maximun value (which correponds to the predicted class)
+            # as second entry
+            prediction = prediction.max(1, keepdim=True)[1]
+
+            # store the predictions and labels
+            predictions.append(prediction[:, 0].to('cpu').numpy())
+            labels.append(y[:, 0].to('cpu').numpy())
+
+    # predictions and labels to numpy arrays
+    predictions = np.concatenate(predictions)
+    labels = np.concatenate(labels)
+
+    # log the validation results if we have a tensorboard
+    if tb_logger is not None:
+
+        accuracy_error = 1. - metrics.accuracy_score(labels, predictions)
+        mean_loss /= n_batches
+
+        # TODO log more advanced things like confusion matrix, see
+        # https://www.tensorflow.org/tensorboard/image_summaries
+
+        tb_logger.add_scalar(tag="validation-error",
+                             global_step=step,
+                             scalar_value=accuracy_error)
+        tb_logger.add_scalar(tag="validation-loss",
+                             global_step=step,
+                             scalar_value=mean_loss)
+
+    # return all predictions and labels for further evaluation
+    return predictions, labels
+
+
+def make_confusion_matrix(labels, predictions, categories, ax):
+    cm = metrics.confusion_matrix(labels, predictions)
+
+    # Normalize the confusion matrix.
+    cm = np.around(cm.astype('float') / cm.sum(axis=1)[:, np.newaxis], decimals=2)
+
+    im = ax.imshow(cm, interpolation='nearest', cmap=plt.cm.Blues)
+    ax.set_title("Confusion matrix")
+    plt.colorbar(im)
+    tick_marks = np.arange(len(categories))
+    plt.xticks(tick_marks, categories, rotation=45)
+    plt.yticks(tick_marks, categories)
+
+    # Use white text if squares are dark; otherwise black.
+    threshold = cm.max() / 2.
+    for i, j in product(range(cm.shape[0]), range(cm.shape[1])):
+        color = "white" if cm[i, j] > threshold else "black"
+        plt.text(j, i, cm[i, j], horizontalalignment="center", color=color)
+
+    plt.tight_layout()
+    plt.ylabel('True label')
+    plt.xlabel('Predicted label')
