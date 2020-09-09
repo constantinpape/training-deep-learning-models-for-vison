@@ -7,6 +7,7 @@ import numpy as np
 import torch
 from torch.utils.data import Dataset
 import sklearn.metrics as metrics
+from sklearn.model_selection import train_test_split
 
 from imageio import imread
 from tqdm import tqdm
@@ -39,24 +40,13 @@ def load_cifar(data_dir):
 
 
 def make_cifar_train_val_split(images, labels, validation_fraction=0.15):
-
-    # shuffle the data
-    n_images = len(images)
-    indices = np.arange(n_images)
-    np.random.shuffle(indices)
-
-    # split into training and validation data
-    validation_fraction = 0.15
-    split_index = int(validation_fraction * n_images)
-    train_indices = indices[:-split_index]
-    val_indices = indices[-split_index:]
-
-    train_images, val_images = images[train_indices], images[val_indices]
-    train_labels, val_labels = labels[train_indices], labels[val_indices]
+    (train_images, val_images,
+     train_labels, val_labels) = train_test_split(images, labels, shuffle=True,
+                                                  test_size=validation_fraction,
+                                                  stratify=labels)
     assert len(train_images) == len(train_labels)
     assert len(val_images) == len(val_labels)
-    assert len(train_images) + len(val_images) == n_images
-
+    assert len(train_images) + len(val_images) == len(images)
     return train_images, train_labels, val_images, val_labels
 
 
