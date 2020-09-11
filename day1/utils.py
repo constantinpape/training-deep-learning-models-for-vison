@@ -142,6 +142,14 @@ def make_cifar_test_dataset(cifar_dir, transform=None):
 # training and validation functions
 #
 
+
+def get_current_lr(optimizer):
+    lrs = [param_group.get('lr', None) for param_group in optimizer.param_groups]
+    lrs = [lr for lr in lrs if lr is not None]
+    # to keep things simple we only return one of the valid lrs
+    return lrs[0]
+
+
 def train(model, loader,
           loss_function, optimizer,
           device, epoch,
@@ -167,7 +175,9 @@ def train(model, loader,
     n_batches = len(loader)
 
     # log the learning rate before the epoch
-    tb_logger.add_scalar('learning-rate', optimizer.lr,
+    lr = get_current_lr(optimizer)
+    tb_logger.add_scalar(tag='learning-rate',
+                         scalar_value=lr,
                          global_step=epoch * n_batches)
 
     # iterate over the training batches provided by the loader
