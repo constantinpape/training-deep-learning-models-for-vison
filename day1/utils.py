@@ -164,8 +164,13 @@ def train(model, loader,
     # set model to train mode
     model.train()
 
-    # iterate over the training batches provided by the loader
     n_batches = len(loader)
+
+    # log the learning rate before the epoch
+    tb_logger.add_scalar('learning-rate', optimizer.lr,
+                         global_step=epoch * n_batches)
+
+    # iterate over the training batches provided by the loader
     for batch_id, (x, y) in enumerate(loader):
 
         # send data and target tensors to the active device
