@@ -8,8 +8,9 @@
 
 ### Exercises:
 
- * 1_data_preparation: this notebook will cover the following topics: working with google colab and google drive, downloading training data, basic image manipulation and visualisation. 
- * Notebook 2 - ReadingData. In this notebook, we first will read images and their corresponding labels and then will wrap and save them in a single file on disk (or google drive). It helps us a lot later to avoid reading so much data each time when we are working with our models. We will use the python pickle module to wrap images in a single file. 
+- 1_data_prepration: load cifar data and prepare it for training with pytorch. [available on colab](https://colab.research.google.com/github/constantinpape/training-deep-learning-models-for-vison/blob/master/day1/1_data_preperation.ipynb)
+- 2_logistic_regression: train single layer model on cifar10. [available on colab](https://colab.research.google.com/github/constantinpape/training-deep-learning-models-for-vison/blob/master/day1/2_logistic_regression.ipynb)
+- 3_multi_layer_perceptron: train multi layer model on cifar10. [available on colab](https://colab.research.google.com/github/constantinpape/training-deep-learning-models-for-vison/blob/master/day1/3_multi_layer_perceptron.ipynb)
 
 
 ## Additional Material
