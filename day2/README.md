@@ -9,7 +9,7 @@
 ### Exercises:
 
 - 1_cnn: train a convolutional neural network on cifar10 data. [available on colab](https://colab.research.google.com/github/constantinpape/training-deep-learning-models-for-vison/blob/master/day2/1_cnn.ipynb)
-- 2_data_augmentation: use data augmentation to improve the network performance. [available on colab](https://colab.research.google.com/github/constantinpape/training-deep-learning-models-for-vison/blob/master/day2/2_data_augmentation.ipynb)
+- 2_data_augmentation: use data augmentation to improve the network performance and make use of normalization layers. [available on colab](https://colab.research.google.com/github/constantinpape/training-deep-learning-models-for-vison/blob/master/day2/2_data_augmentation.ipynb)
 - 3_advanced_architectures: train prefab architectures from torchvision on cifar10 data. [available on colab](https://colab.research.google.com/github/constantinpape/training-deep-learning-models-for-vison/blob/master/day2/3_advanced_architectures.ipynb)
 
 
