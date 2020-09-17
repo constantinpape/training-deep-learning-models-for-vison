@@ -40,6 +40,7 @@ The 3 exercises for this day will focus on Image Classification using supervised
 
 Some additional materials if you want to familiarize with the topics covered here.
 
+
 ### Python courses
 
  * [Introduction to Python for Data Science](https://www.edx.org/course/introduction-to-python-for-data-science-2) - basic
@@ -52,3 +53,6 @@ Some additional materials if you want to familiarize with the topics covered her
  * [Python image manipulation tools](https://opensource.com/article/19/3/python-image-manipulation-tools)
  * [SciPy examples](https://docs.scipy.org/doc/scipy/reference/tutorial/ndimage.html)
  * [Scikit examples](https://scikit-image.org/docs/stable/auto_examples/index.html)
+
+### Pytorch
+ * [Building networks from torch primitives](https://pytorch.org/tutorials/beginner/nn_tutorial.html)
