@@ -80,8 +80,7 @@ def normalize(image, target, channel_wise=True):
 
 # finally, we need to transform our input from a numpy array to a torch tensor
 def to_tensor(image, target):
-    # Note that we need to return the target as 1d tensor, so we remove the singleton second axis
-    return torch.from_numpy(image), torch.tensor([target], dtype=torch.int64)[:, 0]
+    return torch.from_numpy(image), torch.tensor([target], dtype=torch.int64)
 
 
 # we also need a way to compose multiple transformations
@@ -222,7 +221,9 @@ def train(model, loader,
         prediction = model(x)
 
         # calculate the loss (negative log likelihood loss)
-        loss_value = loss_function(prediction, y)
+        # the loss function expects a 1d tensor, so we get rid of the second
+        # singleton dimensions that is added by the loader when stacking across the batch function
+        loss_value = loss_function(prediction, y[:, 0])
 
         # calculate the gradients (`loss.backward()`)
         # and apply them to the model parameters according
@@ -277,7 +278,9 @@ def validate(model, loader, loss_function,
             prediction = model(x)
 
             # update the loss
-            mean_loss += loss_function(prediction, y).item()
+            # the loss function expects a 1d tensor, so we get rid of the second
+            # singleton dimensions that is added by the loader when stacking across the batch function
+            mean_loss += loss_function(prediction, y[:, 0]).item()
 
             # compute the most likely class predictions
             # note that 'max' returns a tuple with the
@@ -287,7 +290,7 @@ def validate(model, loader, loss_function,
 
             # store the predictions and labels
             predictions.append(prediction[:, 0].to('cpu').numpy())
-            labels.append(y.to('cpu').numpy())
+            labels.append(y[:, 0].to('cpu').numpy())
 
     # predictions and labels to numpy arrays
     predictions = np.concatenate(predictions)
