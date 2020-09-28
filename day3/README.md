@@ -11,8 +11,8 @@ in particular the U-Net architecture. The lectures will cover ([you can find the
 
 ### Exercises:
 
-* unet_pytorch - follow the notebook and solve all the tasks to run a unet on Kaggle nuclei dataset
-* noise2noise_pytorch - pytorch implementation of "Noise2Noise: Learning Image Restoration without Clean Data"
+* unet_pytorch - follow the notebook and solve all the tasks to run a unet on Kaggle nuclei dataset [available on colab](https://colab.research.google.com/github/constantinpape/training-deep-learning-models-for-vison/blob/master/day3/unet_pytorch.ipynb)
+* noise2noise_pytorch - pytorch implementation of "Noise2Noise: Learning Image Restoration without Clean Data" [available on colab](https://colab.research.google.com/github/constantinpape/training-deep-learning-models-for-vison/blob/master/day3/noise2noise_pytorch.ipynb)
 
 ## Additional materials
 
