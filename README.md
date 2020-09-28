@@ -8,7 +8,8 @@ See the [course website](https://hci.iwr.uni-heidelberg.de/ial/adl) for details 
 ## Requirements
 
 In order to follow this course you should have basic knowledge of machine learning and/or computer vision and have python programming experience.
-The course will be taught using [Google Colab](https://colab.research.google.com/notebooks/intro.ipynb#), in order to use it you need a google account and about 1GB of free space on your [Google Drive](https://www.google.com/drive/). 
+The course will be taught using [Google Colab](https://colab.research.google.com/notebooks/intro.ipynb#), in order to use it you need a google account. 
+Some free space on your google drive (~ 1GB) will be benefitial [Google Drive](https://www.google.com/drive/). 
 
 
 ## Content
@@ -22,15 +23,15 @@ The course will be taught using [Google Colab](https://colab.research.google.com
 
 Practical part:
 - Data preperation for pytorch
-- Image Classification (Logistic Regression -> MLP)
+- Image Classification on CIFAR (Logistic Regression -> MLP)
 
 
 ### Day 2:
 
 - Deep Learning for Vision:
     - Introduction to CNNs
-    - More on traiing and data augmentations
-    - Advanced architectures: ResNet, ...
+    - More on training and data augmentations
+    - Advanced architectures: ResNet etc.
 
 Practical part:
 - Image classification with CNN on CIFAR10
@@ -39,26 +40,19 @@ Practical part:
 
 ### Day 3:
 
-- Advanced topics:
-    - Image segmentation and denoising with U-Net (in detail)
-    - Other applications: object detection (depth estimation, ...)
-    - Intro to biomedical image analysis
-    - More on loss functions
+- Intro to biomedical image analysis
+- Image segmentation and denoising with U-Net (in detail)
 
 Practical part:
-- (CNN and Data Augmentation on CIFAR10 continued)
-- 2d segmentation on DSB
+- Segmentation on DSB
+- Denoising with noise to void
 
 
 ### Day 4:
 
-- Advanced topics:
-    - More on architectures: Res-Net, Dense-Net
+- Object detection
 
-Practical part: Choice of larger exercise (tentative)
-- Build the best classification network + evaluation on Fashion MNIST
-- Build the best segmentation network + post-processing for instance segmentation on DSB or ISBI2012 Challenge
-- Bring your own data / small project
+Practical part:
 
 ### Day 5:
 
