@@ -22,7 +22,6 @@ In the exercises we will again apply the methods learned today on the CIFAR10 da
 
 ## Additional materials
 
-
 ### More reading material and courses
 
 1. [Machine Learning course](https://www.coursera.org/learn/machine-learning) by Andrew Ng on Coursera
@@ -35,6 +34,11 @@ In the exercises we will again apply the methods learned today on the CIFAR10 da
 
  * [Why do we need Data Augmentation?](https://nanonets.com/blog/data-augmentation-how-to-use-deep-learning-when-you-have-limited-data-part-2/)
  * [Data Augmentation Libraries](https://towardsdatascience.com/data-augmentation-for-deep-learning-4fe21d1a4eb9)
+
+### Optimizers
+
+ * [An overview of grdient descent optimization algorithms](https://ruder.io/optimizing-gradient-descent/) - good introduction to popular optimizers
+ * [Descending through a Crowded Valley](https://arxiv.org/pdf/2007.01547.pdf) - Extensive benchmarking of deep learning optimizers
 
 ### Video lectures EMBL course
 
