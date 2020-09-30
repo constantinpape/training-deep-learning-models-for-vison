@@ -4,8 +4,8 @@ On the last day, you should work on a larger exercise (without a notebook templa
 You are welcome to choose the topic of this exercise yourself and also work on data of your own choosing.
 We have also prepared some ideas for longer exercises:
 
-- [Solve a 3D segmentation problem on data from plant biology]()
-- [Contrastive learning for visual representations]()
+- [Solve a 3D segmentation problem on data from plant biology](https://github.com/constantinpape/training-deep-learning-models-for-vison/blob/master/exercises/3d-segmentation.md)
+- [Contrastive learning for visual representations](https://github.com/constantinpape/training-deep-learning-models-for-vison/blob/master/exercises/contrastive-learning.md)
 <!-- more exercises?
 - []()
 - [Use your phone to deploy a simple classification problem]()
