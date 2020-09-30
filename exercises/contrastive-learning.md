@@ -14,9 +14,42 @@ Here, we will implement a method for unsupervised representation learning based 
 
 ## SimCLR A simple Framework for Contrastive Learning of Visual Representations
 
+The SimCLR method works by minimizing a contrastive loss function between pairs of images.
+The idea is to compute that loss in such a way that related images are closer in the representation space
+than unrelated images. This is achieved by (see also image below):
+- applying two randomly parametrized transformations (drawn from the same distribution of transformations) `t`,`t'` to the input image
+- appplying the (learnable) function `f` to the two transformed images to obtain the representations `h_i`, `h_j`.
+- applying a small learnable projection function `g` to the representations to obtain `z_i`, `z_j`.
+- maximizing the agreement between `z_i` and `z_j` using the contrastive loss function.
 
+![overview](https://user-images.githubusercontent.com/4263537/94680396-f8ecba80-0321-11eb-81db-61874fc87c38.png)
+
+SimCLR only computes the explicit loss between positive pairs, i.e. the pairs of images obtained by applying two differently parametrized transformations to the same input image. Given a minibatch of N images (2N images after transformations), for a given positive pair $ij$ all other  2 (N - 1) transformed images are treated as negative examples.
+This is formalized in the normalized temperature-scaled cross entropy, short loss NT-Xent:
+
+![loss](https://user-images.githubusercontent.com/4263537/94681766-410cdc80-0324-11eb-87b7-08b854a83fa5.png)
+
+where `sim(z_i, z_j)` is the cosine simjarity of projection `z_i` and `z_j` and `tau` is a temperature parameter.
+
+The paper examines several choices for the transformations and finds the following combination to work the best:
+- taking a random crop of the image and resizing it back to the original size
+- randomly applying a horizontal flip
+- applying random color jittering 
+- blurring the image with a randomly sampled sigma factor
+
+It uses a Resnet50  (we will use a Resnet18 to lower the training effort) as function `f` and uses the result after the average pooling layer, discarding the final fully connected layer, as representation. 
+For the  projection `g` a small network consisting of 2 fully connected layers with an intermediate ReLU activation is used. Empirically, computing the loss on the projection `z` instead of the representation `h` yields significantly better representations; the size of the projection 
+space did not matter, you can take 256. Overall, this summarizes the SimCLR training:
+
+![training](https://user-images.githubusercontent.com/4263537/94684528-774c5b00-0328-11eb-9afd-ef9bc270bf28.png)
+
+After the representation has been trained, it can be evaluated by training a small MLP or linear model on a fraction of the
+labeled training data; this model should yield a fairly high accuracy comparable to larger models trained fully supervised on the whole training data.
+Note that this network should be trained on the representation `h`, not the projection `z`.
+
+In addition, the paper performs a set of experiments that compare different parameter choices and show that the
+proposed method can yield very accurate results on ImageNet when using only a small fraction of the labeled training data.
 For more details, [check out the paper](https://arxiv.org/abs/2002.05709).
-
 
 ## Exercise
 
@@ -24,7 +57,7 @@ While the ImageNet results in the SimCLR paper require a lot of computation, the
 is fairly simple, and can be applied to smaller datasets with much less resources.
 For this exercise, implement SimCLR:
 - Choose a small image dataset such as [CIFAR10](https://www.cs.toronto.edu/~kriz/cifar.html) or [STL10](https://cs.stanford.edu/~acoates/stl10/). 
-- Implement the unsupervised training procedure, where you sample positive pairs by applying a succession of transformations to the same image and compute the contrastive loss.
+- Implement the unsupervised training procedure, where you sample positive pairs by applying a succession of transformations to the same image and compute the contrastive loss. Use it to train a Resnet18 to output a visual representation space.
 - Train a linear model or small MLP using the learned representations as input. Only use a small fraction of the labeled data for supervison and do not update the representation during traing.
 - Compare the results to a supervised model learned on the fully labeled dataset.
 
