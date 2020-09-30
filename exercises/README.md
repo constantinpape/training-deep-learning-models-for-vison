@@ -11,3 +11,8 @@ We have also prepared some ideas for longer exercises:
 - [Use your phone to deploy a simple classification problem]()
 -->
 
+## Mounting your google drive in colab
+
+For some of the exercises here, it is better to have some permanent storage for access to larger datasets or to save model checkpoints.
+To get permanent storage in google colab, you can mount your google drive.
+Check out the notebook [mount-gdrive-in-colab.ipynb](https://colab.research.google.com/github/constantinpape/training-deep-learning-models-for-vison/blob/master/exercises/mount-gdrive-in-colab.ipynb) for instructions.
