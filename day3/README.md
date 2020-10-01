@@ -2,7 +2,7 @@
 
 ## Content
 On the third day, we will focus on fully convolutional neural networks for semantic segmentation.
-in particular the U-Net architecture. The lectures will cover ([you can find the slides here](https://docs.google.com/presentation/XXXX)):
+in particular the U-Net architecture. The lectures will cover ([you can find the slides here](https://docs.google.com/presentation/d/1ZOoYWhxi5_niWBCZnHqSQBTqts5eWRqiVyTnKTBi8_M/edit?usp=sharing)):
 - A quick introduction to semantic segmentation with convolutional neural networks
 - U-Net architecture for bioimage segmentation
 - Variants of the U-Net architecture (residual blocks, normalization layers, upsampling layers)
