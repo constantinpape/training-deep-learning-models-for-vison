@@ -1,5 +1,7 @@
 # Training Deep Learning Models for Vision - Compact Course
 
+[![Join the chat at https://gitter.im/training-deep-learning-models-for-vison/community](https://badges.gitter.im/training-deep-learning-models-for-vison/community.svg)](https://gitter.im/training-deep-learning-models-for-vison/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 A compact course on using deep learning methods for computer vision.
 Based on material from the [EMBL deep learning course](https://github.com/kreshuklab/teaching-dl-course-2019).
 
