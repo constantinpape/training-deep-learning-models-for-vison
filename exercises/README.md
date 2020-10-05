@@ -6,10 +6,7 @@ We have also prepared some ideas for longer exercises:
 
 - [Solve a 3D segmentation problem on data from plant biology](https://github.com/constantinpape/training-deep-learning-models-for-vison/blob/master/exercises/3d-segmentation.md)
 - [Contrastive learning for visual representations](https://github.com/constantinpape/training-deep-learning-models-for-vison/blob/master/exercises/contrastive-learning.md)
-<!-- more exercises?
-- []()
-- [Use your phone to deploy a simple classification problem]()
--->
+- [Object Detection with Transformers on Pascal VOC 2012](./object-detection-transformers.md)
 
 ## Mounting your google drive in colab
 

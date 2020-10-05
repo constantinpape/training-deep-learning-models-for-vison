@@ -9,7 +9,8 @@ The lectures will cover ([you can find the slides here](https://docs.google.com/
 - End-to-end Object Detection with Transformers
 
 ### Advanced Exercises:
-In the afternoon we're going to start working on advanced exercises which are described [here](../exercises/README.md).
+In the afternoon we're going to start working on advanced exercises which are described [here](../exercises/README.md),
+in particular the object detection exercise can be found [here](../exercises/object-detection-transformers.md)
 
 ## Additional materials
 [Object Detection for Dummies](https://lilianweng.github.io/lil-log/2017/12/31/object-recognition-for-dummies-part-3.html)  
