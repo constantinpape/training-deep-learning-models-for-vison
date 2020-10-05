@@ -42,12 +42,11 @@ Practical part:
 
 ### Day 3:
 
-- Intro to biomedical image analysis
 - Image segmentation and denoising with U-Net (in detail)
 
 Practical part:
-- Segmentation on DSB
-- Denoising with noise to void
+- Segmentation on DSB2018
+- Denoising with noise to noise
 
 
 ### Day 4:
@@ -55,6 +54,7 @@ Practical part:
 - Object detection
 
 Practical part:
+- Use pre-trained DETR model on the Pascal VOC dataset 
 
 ### Day 5:
 
