@@ -12,18 +12,23 @@ We're going to use this model detect objects in the images from the validation s
 We're going to base our exercise on the excellent [notebook] (https://github.com/facebookresearch/detr#notebooks) from Facebook Reserach,
 Use the following [notebook](../day4/detr_demo.ipynb) as a starting point.
 
+## Before you start
+
+download the Pascal VOC validation set from the [here](https://oc.embl.de/index.php/s/bkBUhSajTPP0lUP) and save it in your Google Drive. 
+The archive is 2GB in size so the upload will take a while. 
+
 # Exercise
 1. Given the images from the `VOCSegmentation` dataset in the notebook, use the pre-trained DETR model to detect object.
 Show bounding boxes together with the ground truth segmentation masks on 20 randomly selected images from Pascal VOC dataset.
 Quantitatively how does the model perform? Do you see any irregularities between the predicted bounding boxes and the ground truth masks?
 
-2. Quantify the object detection performance on the Pascal VOC 2012 dataset.
+2. Quantify the object detection performance on the Pascal VOC 2012 dataset using the Mean Average Precision metric.
 Given a function which returns the ground truth bounding boxes together with their corresponding class labels (implemented in the notebook),
 and bounding box predictions given by the DETR model, compute the `mAP` score on the Pascal VOC 2012 dataset.
 Details of how to implement `mAP` for object detection ca be found e.g. [here](https://medium.com/@jonathan_hui/map-mean-average-precision-for-object-detection-45c121a31173).
 
 **Hint**
-bear in mind that COCO dataset contains 91 classes, whereas Pascal VOC contains 20 classes. For images where DETR model
-returns one of the 71 classes not present in the Pascal VOC, simply ignore the predicted bounding box instead of counting
+bear in mind that COCO dataset contains 81 classes, whereas Pascal VOC contains 20 classes. For images where DETR model
+returns one of the 61 classes not present in the Pascal VOC, simply ignore the predicted bounding box instead of counting
 it as a False Positive.
 
