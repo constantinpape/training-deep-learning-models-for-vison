@@ -22,10 +22,11 @@ The archive is 2GB in size so the upload will take a while.
 Show bounding boxes together with the ground truth segmentation masks on 20 randomly selected images from Pascal VOC dataset.
 Quantitatively how does the model perform? Do you see any irregularities between the predicted bounding boxes and the ground truth masks?
 
-2. Quantify the object detection performance on the Pascal VOC 2012 dataset using the Mean Average Precision metric.
-Given a function which returns the ground truth bounding boxes together with their corresponding class labels (implemented in the notebook),
-and bounding box predictions given by the DETR model, compute the `mAP` score on the Pascal VOC 2012 dataset.
-Details of how to implement `mAP` for object detection ca be found e.g. [here](https://medium.com/@jonathan_hui/map-mean-average-precision-for-object-detection-45c121a31173).
+2. Quantify the object detection performance on the Pascal VOC 2012 dataset using the Mean Average Precision metric. 
+Given a function which returns the ground truth bounding boxes together with their corresponding classes (see `find_boxes`) 
+and bounding box predictions given by the DETR model, compute the `mAP` score at different IoU thresholds (e.g. 0.4, 0.5, 0.75) 
+on the **entire** Pascal VOC 2012 dataset. Details of how to implement `mAP` for object detection ca be found 
+e.g. [here](https://medium.com/@jonathan_hui/map-mean-average-precision-for-object-detection-45c121a31173).
 
 **Hint**
 bear in mind that COCO dataset contains 81 classes, whereas Pascal VOC contains 20 classes. For images where DETR model
