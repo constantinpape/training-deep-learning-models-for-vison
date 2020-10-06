@@ -3,15 +3,18 @@
 Segmenting the structures of interest is an important task for analysing microscopy images.
 We have already covered this [in an exercise on the second day](https://github.com/constantinpape/training-deep-learning-models-for-vison/tree/master/day3#exercises).
 However, for many applications the microscopy data is 3 dimensional; and the segmentation task more difficult.
-For this exercise, we will use publicly available data from confocal microscopy that
-shows plant cells during development, you can find it [here](https://osf.io/w38uf/).
-We're going to work with a small subset of the Arabidopsis Thaliana Ovules dataset which has to be dowloaded
+
+For this exercise, we will work on a publicly available dataset that shows plant cells imaged with confocal microscopy during their development.
+We have extraxted a small subset of the Arabidopsis Thaliana Ovules dataset which has to be dowloaded
 from [here](https://oc.embl.de/index.php/s/8giJ7SnNfknMzHO). The 3d images are saved in the HDF5 file format
 and can be easily read into numpy arrays using the [h5py](https://docs.h5py.org/en/stable/) library.
 
 Each HDF5 file contains two datasets:
 - `raw` containing the 3d images from the confocal microscope
 - `label` containing the dense ground truth labels for each cell (each cell has it's own label)
+
+Below you can see the raw image data `raw`, the segmentation labels `labels` and the boundaries that we will use as training target
+for a single image plane.
 
 ![raw](https://user-images.githubusercontent.com/4263537/94693558-29d5eb00-0334-11eb-833e-9f1ded0cb620.png)
 ![labels](https://user-images.githubusercontent.com/4263537/94693568-2cd0db80-0334-11eb-8053-709d0cfbdef1.png)
