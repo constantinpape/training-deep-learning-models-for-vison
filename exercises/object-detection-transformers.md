@@ -9,7 +9,7 @@ developed, see [End-to-End Object Detection with Transformers](https://arxiv.org
 In this exercise we're going to use a simplified version of [DETR model](https://github.com/facebookresearch/detr)
 model provided by Facebook Research pre-trained on the [COCO object detection dataset](https://cocodataset.org/#home).
 We're going to use this model detect objects in the images from the validation set of [Pascal VOC 2012](http://host.robots.ox.ac.uk/pascal/VOC/voc2012/devkit_doc.pdf) dataset.
-We're going to base our exercise on the excellent [notebook] (https://github.com/facebookresearch/detr#notebooks) from Facebook Reserach,
+We're going to base our exercise on the excellent [notebook](https://github.com/facebookresearch/detr#notebooks) from Facebook Reserach,
 Use the following [notebook](../day4/detr_demo.ipynb) as a starting point.
 
 ## Before you start
