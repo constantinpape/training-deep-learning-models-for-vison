@@ -59,16 +59,17 @@ is fairly simple, and can be applied to smaller datasets with much less resource
 For this exercise:
 - Choose a small image dataset such as [CIFAR10](https://www.cs.toronto.edu/~kriz/cifar.html) or [STL10](https://cs.stanford.edu/~acoates/stl10/). 
 - Implement the unsupervised training procedure, where you sample positive pairs by applying a succession of transformations to the same image and compute the contrastive loss. Use it to train a Resnet18 to output a visual representation space.
-- Train a linear model or small MLP using the learned representations as input. Only use a small fraction of the labeled data for supervison and do not update the representation during traing.
-- Compare the results to a supervised model learned on the fully labeled dataset.
+- Train a linear model or small MLP using the learned representations as input. Only use a small fraction of the labeled data for supervison and do not update the representation during trainig.
 
-After implementing the basic SimCLR framework, you can explore how the following settings influence the quality of the learned representations:
-- the fraction of labeled data used for the small classification model
-- the number of epochs used for training
-- the transformations used for generating positive pairs
-- the batch size used during training
+Note that training the network to get a good result you will need to train it for >10 epochs (and to get really good results for more than 100 or so epochs).
+To finish this exercise in the limited time of the course, finish and validate your implementation and then train one model for as many epochs as your time affords. In order to not loose this model, you should store its checkpoints on your google drive!
 
-You can also try to visualize the learned representation using a dimensionalty reduction method like T-SNE or UMAP.
+Once you have trained it, compare the results of training a linear model on top of the embedding with:
+- a linear model trained on top of a random embedding
+- a fully supervised model trained on the dataset
+
+In addition, you can check how the performance changes when you vary the fraction of labels used to train the linear model
+and you can also try to visualize the learned representation using a dimensionalty reduction method like T-SNE or UMAP.
 
 **Hints**:
 
@@ -84,4 +85,15 @@ When you instantiate the optimizer, you also need to exclude these parameters:
 optimizer = optim.Adam(filter(lambda p: p.requires_grad, model.parameters()))
 
 ```
+
 For the loss function, you can use the [cosine similarity](https://pytorch.org/docs/stable/nn.functional.html#torch.nn.functional.cosine_similarity) to compute the similarity between the pairs of transformed images.
+Given two matrices with representations of shape `[N, representation_dim]`, you can compute the distance matrix of all `N` points (size `[N, N]`) like this:
+```python
+sim = F.cosine_similarity(representations1.unsqueeze(1), representations2.unsqueeze(0), dim=-1)
+```
+You should sketch out this matrix for a small example to see how to get the positives and negatives from it. Once you have positives and negatives, you can use the cross entropy function from pytorch to compute the loss:
+```python
+logits = torch.cat([positives, negatives], dim=1)  # concatenate the distance of the positive and the negatives per sample across the first axis
+labels = torch.zeros(len(logits), dtype=torch.long)  # this chooses the zeroth entry for the nominator of the cross entropy function
+loss = F.cross_entropy(logits, labels, reduction='sum')
+```
