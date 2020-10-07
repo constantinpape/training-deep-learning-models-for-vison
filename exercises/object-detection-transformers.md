@@ -24,8 +24,10 @@ Quantitatively how does the model perform? Do you see any irregularities between
 
 2. Quantify the object detection performance on the Pascal VOC 2012 dataset using the Mean Average Precision metric. 
 Given a function which returns the ground truth bounding boxes together with their corresponding classes (see `find_boxes`) 
-and bounding box predictions given by the DETR model, compute the `mAP` score at different IoU thresholds (e.g. 0.4, 0.5, 0.75) 
-on the **entire** Pascal VOC 2012 dataset. Details of how to implement `mAP` for object detection ca be found 
+and bounding box predictions given by the DETR model, compute the `mAP` score at different 'intersection over union' (IoU) thresholds (e.g. 0.4, 0.5, 0.75) 
+on the **entire** Pascal VOC 2012 dataset.
+A detection is a true positive if it has IoU with a ground-truth box greater than a given threshold. 
+Details of how to implement `mAP` for object detection ca be found 
 e.g. [here](https://medium.com/@jonathan_hui/map-mean-average-precision-for-object-detection-45c121a31173).
 
 **Hint**
