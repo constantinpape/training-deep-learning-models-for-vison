@@ -1,5 +1,7 @@
 # Training Deep Learning Models for Vision - Compact Course
 
+[![Join the chat at https://gitter.im/training-deep-learning-models-for-vison/community](https://badges.gitter.im/training-deep-learning-models-for-vison/community.svg)](https://gitter.im/training-deep-learning-models-for-vison/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 A compact course on using deep learning methods for computer vision.
 Based on material from the [EMBL deep learning course](https://github.com/kreshuklab/teaching-dl-course-2019).
 
@@ -40,12 +42,11 @@ Practical part:
 
 ### Day 3:
 
-- Intro to biomedical image analysis
 - Image segmentation and denoising with U-Net (in detail)
 
 Practical part:
-- Segmentation on DSB
-- Denoising with noise to void
+- Segmentation on DSB2018
+- Denoising with noise to noise
 
 
 ### Day 4:
@@ -53,6 +54,7 @@ Practical part:
 - Object detection
 
 Practical part:
+- Use pre-trained DETR model on the Pascal VOC dataset 
 
 ### Day 5:
 
