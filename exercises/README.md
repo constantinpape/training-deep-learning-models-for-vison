@@ -10,6 +10,7 @@ We have also prepared some ideas for longer exercises:
 
 ## Mounting your google drive in colab
 
-For some of the exercises here, it is better to have some permanent storage for access to larger datasets or to save model checkpoints.
+For the exercises that require longer training or need large datasets, it is better to have permanent storage for access to larger datasets or to save model checkpoints.
 To get permanent storage in google colab, you can mount your google drive.
 Check out the notebook [mount-gdrive-in-colab.ipynb](https://colab.research.google.com/github/constantinpape/training-deep-learning-models-for-vison/blob/master/exercises/mount-gdrive-in-colab.ipynb) for instructions.
+It also shows how to save and load model checkpoints for training.
