@@ -11,7 +11,7 @@ See the [course website](https://hci.iwr.uni-heidelberg.de/ial/adl) for details 
 
 In order to follow this course you should have basic knowledge of machine learning and/or computer vision and have python programming experience.
 The course will be taught using [Google Colab](https://colab.research.google.com/notebooks/intro.ipynb#), in order to use it you need a google account. 
-Some free space on your google drive (~ 1GB) will be benefitial [Google Drive](https://www.google.com/drive/). 
+Some free space on your google drive (~ 3GB) will be benefitial [Google Drive](https://www.google.com/drive/). 
 
 
 ## Content
@@ -45,16 +45,16 @@ Practical part:
 - Image segmentation and denoising with U-Net (in detail)
 
 Practical part:
-- Segmentation on DSB2018
-- Denoising with noise to noise
+- Semantic Segmentation on DSB2018
+- Denoising with noise-to-noise approach
 
 
 ### Day 4:
 
-- Object detection
+- Deep Learning for Object detection
 
 Practical part:
-- Use pre-trained DETR model on the Pascal VOC dataset 
+- Use DETR model pre-trained on COCO dataset, on images from the Pascal VOC 2012 dataset 
 
 ### Day 5:
 
