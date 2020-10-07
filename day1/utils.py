@@ -156,7 +156,7 @@ def save_checkpoint(model, optimizer, epoch, save_path):
     }, save_path)
 
 
-def load_checkpoin(save_path, model, optimizer):
+def load_checkpoint(save_path, model, optimizer):
     checkpoint = torch.load(save_path)
     model.load_state_dict(checkpoint['model_state_dict'])
     optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
@@ -425,4 +425,33 @@ class SimpleCNN(nn.Module):
         x = x.view(-1, 24 * 6 * 6)
         x = self.fc(x)
         x = self.activation(x)
+        return x
+
+
+class SimpleMLP(nn.Module):
+    def __init__(self, n_pixels, n_classes):
+        super().__init__()
+        self.n_pixels = n_pixels
+        self.n_classes = n_classes
+
+        # here, we define the structure of the MLP.
+        # it's imporant that we use a non-linearity after each
+        # fully connected layer! Here we use the rectified linear
+        # unit, short ReLu
+        self.layers = nn.Sequential(
+            nn.Linear(n_pixels, 400),
+            nn.ReLU(),
+            nn.Linear(400, 200),
+            nn.ReLU(),
+            nn.Linear(200, 100),
+            nn.ReLU(),
+            nn.Linear(100, 50),
+            nn.ReLU(),
+            nn.Linear(50, n_classes),
+            nn.LogSoftmax(dim=1)
+        )
+
+    def forward(self, x):
+        x = x.view(-1, self.n_pixels)
+        x = self.layers(x)
         return x
