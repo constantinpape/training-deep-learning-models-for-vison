@@ -54,8 +54,9 @@ Practical part:
 - Deep Learning for Object detection
 
 Practical part:
-- Use DETR model pre-trained on COCO dataset, on images from the Pascal VOC 2012 dataset 
+Work on longer exercise.
 
 ### Day 5:
 
-Work on exercise and presentation of exercise results.
+Practical part:
+Work on longer exercise.
