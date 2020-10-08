@@ -35,7 +35,7 @@ for input_image, boundary_labels in ds:
 - Implement 3D data augmentations, e.g. rotations, random flipping and additive gaussian noise on the input
 Your chain of transformation for the training phase should look similar to:
 ```python
-train_transform = torchvision.transforms.Compose([
+input_transform = torchvision.transforms.Compose([
     Normalize(),
     Rotate(random_seed=0), # make sure that input and target validations have the same seed, i.e. input and target are always rotated by the same degree
     RandomFlip(random_seed=0), # make sure input and target are randomly flipped in the same way
@@ -43,7 +43,7 @@ train_transform = torchvision.transforms.Compose([
     ToTensor()
 ])
 
-val_transform = torchvision.transforms.Compose([
+target_transform = torchvision.transforms.Compose([
     Rotate(random_seed=0), # make sure that input and target validations have the same seed, i.e. input and target are always rotated by the same degree
     RandomFlip(random_seed=0), # make sure input and target are randomly flipped in the same way
     LabelToBounday(),
