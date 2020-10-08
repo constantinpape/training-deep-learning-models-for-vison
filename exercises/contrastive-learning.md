@@ -86,6 +86,13 @@ optimizer = optim.Adam(filter(lambda p: p.requires_grad, model.parameters()))
 
 ```
 
+For the resnet, you should NOT include the fully connected layer:
+```python
+model = torchvision.models.resnet18(pretrained=False)
+# remove the fully connected layer from the resnet
+model = nn.Sequential(*list(model.children())[:-1])
+```
+
 For the loss function, you can use the [cosine similarity](https://pytorch.org/docs/stable/nn.functional.html#torch.nn.functional.cosine_similarity) to compute the similarity between the pairs of transformed images.
 Given two matrices with representations of shape `[N, representation_dim]`, you can compute the distance matrix of all `N` points (size `[N, N]`) like this:
 ```python
