@@ -1,3 +1,5 @@
+Archived because the course is finished. See https://github.com/constantinpape/dl-teaching-resources for updated versions of the exercises.
+
 # Training Deep Learning Models for Vision - Compact Course
 
 [![Join the chat at https://gitter.im/training-deep-learning-models-for-vison/community](https://badges.gitter.im/training-deep-learning-models-for-vison/community.svg)](https://gitter.im/training-deep-learning-models-for-vison/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
